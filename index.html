@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My first Vue app</title>
-  <script src="https://unpkg.com/vue"></script>
+  <meta charset="utf-8">
+  <title>かんばん</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <div id="app">
-    {{ message }}
-  </div>
+  <h2>かんばんボード</h2>
+  <p>このボードは、テクコン部新人3名によるVue.jsの演習成果物である。</p>
 
-  <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        message: 'Hello Vue!'
-      }
-    })
-  </script>
+  <div id="app">
+    <!-- 絞り込みラジオボタン -->
+    <!-- ToDo テーブル -->
+    <table>
+      <!-- テーブルヘッダー -->
+      <thead>
+        <tr>
+          <th class="todo">ToDo</th>
+          <th class="doing">Doing</th>
+          <th class="review">Review</th>
+          <th class="done">Done</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
+          <tr v-for="item in todos" v-bind:key="item.id">
+            <!-- 要素の情報 -->
+            <td>{{ item.id }}</td>
+            <td>{{ item.comment }}</td>
+            <td>{{ item.comment }}</td>
+            <td>{{ item.comment }}</td>
+          </tr>
+      </tbody>
+    </table>
+    <!-- 新規登録フォーム -->
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
