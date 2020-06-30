@@ -1,0 +1,55 @@
+  #app {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  body {
+    background-color:#ffcc99;
+  }
+  .kanban {
+    table-layout: fixed;
+    width: 800px;
+    border: 1px solid;
+    text-align: center;
+    background-color: white;
+  }
+  .kanban td {
+    border: 1px solid;
+    vertical-align: top;  
+  }
+  .todo, .doing, .review, .done {
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .todo tbody td, .doing td, .review td, .done td{
+    background-color:#ffffb2;
+  }
+  .todo tfoot td{
+   text-align: left;
+   border: none;
+  }
+  #overlay{
+    /*　要素を重ねた時の順番　*/
+    z-index:1;
+  
+    /*　画面全体を覆う設定　*/
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+  
+    /*　画面の中央に要素を表示させる設定　*/
+    display: flex;
+    align-items: center; /*縦中央*/
+    justify-content: center;  /*横中央*/
+  
+  }
+  #content{
+    z-index:2;
+    width:50%;
+    padding: 1em;
+    background-color: #ffffcc;
+  }
+  
