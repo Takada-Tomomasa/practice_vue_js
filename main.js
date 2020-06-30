@@ -1,6 +1,7 @@
 var app = new Vue({
     el: '#app',
     data: {
+      showContent: false,
       todos:
       [{ "id": 1, "name": "画期的なデザインに変更", "contents": "背景色を青に変える", "status": 1},
       { "id": 2, "name": "ストーリー2", "contents": "内容2", "status": 1},
@@ -11,9 +12,12 @@ var app = new Vue({
       { "id": 6, "name": "ストーリー6", "contents": "内容6", "status": 4},
       { "id": 7, "name": "ストーリー7", "contents": "内容7", "status": 4}]
     },
-    compute: {
-      showTodos:function(){
-        
+    methods:{
+      openModal: function(){
+        this.showContent = true
+      },
+      closeModal: function(){
+        this.showContent = false
       }
     }
   })

@@ -26,6 +26,13 @@
                 <td>{{ item.name }}</td>
              </tr>
            </tbody>
+           <tfoot>
+             <tr>
+               <td>
+            <button v-on:click="openModal">✙</button>
+               </td>
+            </tr>
+            </tfoot>
           </table>
         </td>
 
@@ -76,6 +83,17 @@
       </tr>
     </table>
     <!-- 新規登録フォーム -->
+
+    <div id="overlay" v-show="showContent">
+        <div id="content">
+          <h2>ストーリーを追加</h2>
+          <p>ストーリー名</p>
+          <input type="text" ref="name">
+          <p>内容</p>
+          <textarea name="contents" rows="4" cols="40" placeholder="内容を入力してください。" onfocus="this.placeholder = ''"></textarea>
+          <p><button v-on:click="closeModal">キャンセル</button><button v-on:click="closeModal">保存</button></p>
+        </div>
+    </div>  
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="main.js"></script>
