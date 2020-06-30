@@ -1,49 +1,19 @@
-* {
-    box-sizing: border-box;
-  }
   #app {
     max-width: 640px;
     margin: 0 auto;
   }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  thead th {
-    border-bottom: 2px solid #0099e4; /*#d31c4a */
-    color: #0099e4;
-  }
-  th,
-  th {
-    padding: 0 8px;
-    line-height: 40px;
-  }
-  thead th.todo th.doing th.review th.done {
-    width: 300px;
-  }
-  tbody td.review, tbody td.done {
+  .kanban {
+    table-layout: fixed;
+    width: 800px;
+    border: 1px solid;
     text-align: center;
   }
-  tbody tr td,
-  tbody tr th {
-    border-bottom: 1px solid #ccc;
-    transition: all 0.4s;
+  .kanban td {
+    border: 1px solid;
+    vertical-align: top;
   }
-  tbody tr.done td,
-  tbody tr.done th {
-    background: #f8f8f8;
-    color: #bbb;
-  }
-  tbody tr:hover td,
-  tbody tr:hover th {
-    background: #f4fbff;
-  }
-  button {
-    border: none;
-    border-radius: 20px;
-    line-height: 24px;
-    padding: 0 8px;
-    background: #0099e4;
-    color: #fff;
-    cursor: pointer;
+  .todo, .doing, .review, .done {
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
   }

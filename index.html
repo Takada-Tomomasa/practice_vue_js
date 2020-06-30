@@ -12,26 +12,68 @@
   <div id="app">
     <!-- 絞り込みラジオボタン -->
     <!-- ToDo テーブル -->
-    <table>
-      <!-- テーブルヘッダー -->
-      <thead>
-        <tr>
-          <th class="todo">ToDo</th>
-          <th class="doing">Doing</th>
-          <th class="review">Review</th>
-          <th class="done">Done</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
-          <tr v-for="item in todos" v-bind:key="item.id">
-            <!-- 要素の情報 -->
-            <td>{{ item.id }}</td>
-            <td>{{ item.comment }}</td>
-            <td>{{ item.comment }}</td>
-            <td>{{ item.comment }}</td>
-          </tr>
-      </tbody>
+    <table class="kanban">
+      <tr>
+        <td>
+          <table class="todo">
+            <thead>
+              <tr>
+               <th>ToDo</th>
+             </tr>
+           </thead>
+           <tbody>
+              <tr v-for="item in todos" v-if="item.status=='1'">
+                <td>{{ item.name }}</td>
+             </tr>
+           </tbody>
+          </table>
+        </td>
+
+        <td>
+          <table class="doing">
+            <thead>
+              <tr>
+                <th>Doing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in todos" v-if="item.status=='2'">
+                <td>{{ item.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+
+        <td>
+          <table class="review">
+            <thead>
+              <tr>
+                <th>Review</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in todos" v-if="item.status=='3'">
+                <td>{{ item.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+
+        <td>
+          <table class="done">
+            <thead>
+              <tr>
+                <th>Done</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in todos" v-if="item.status=='4'">
+                <td>{{ item.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
     </table>
     <!-- 新規登録フォーム -->
   </div>
