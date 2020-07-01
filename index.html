@@ -88,10 +88,10 @@
         <div id="content">
           <h2>ストーリーを追加</h2>
           <p>ストーリー名</p>
-          <input type="text" ref="name">
+          <input type="text" v-model="addStoryName">
           <p>内容</p>
           <textarea name="contents" rows="4" cols="40" placeholder="内容を入力してください。" onfocus="this.placeholder = ''"></textarea>
-          <p><button v-on:click="closeModal">キャンセル</button><button v-on:click="closeModal">保存</button></p>
+          <p><button v-on:click="closeModal">キャンセル</button><button v-on:click="addItem">保存</button></p>
         </div>
     </div>  
   </div>
