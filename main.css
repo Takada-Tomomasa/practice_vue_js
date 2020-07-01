@@ -48,8 +48,9 @@
   }
   #content{
     z-index:2;
-    width:50%;
+    width:30%;
     padding: 1em;
+    padding-left: 6em;
     background-color: #ffffcc;
   }
   

@@ -23,7 +23,7 @@
            </thead>
            <tbody>
               <tr v-for="item in todos" v-if="item.status=='1'">
-                <td>{{ item.name }}</td>
+                <td @click="openModalDetails(item)">{{ item.name }}</td>
              </tr>
            </tbody>
            <tfoot>
@@ -45,7 +45,7 @@
             </thead>
             <tbody>
               <tr v-for="item in todos" v-if="item.status=='2'">
-                <td>{{ item.name }}</td>
+                <td @click="openModalDetails(item)">{{ item.name }}</td>
               </tr>
             </tbody>
           </table>
@@ -60,7 +60,7 @@
             </thead>
             <tbody>
               <tr v-for="item in todos" v-if="item.status=='3'">
-                <td>{{ item.name }}</td>
+                <td @click="openModalDetails(item)">{{ item.name }}</td>
               </tr>
             </tbody>
           </table>
@@ -75,25 +75,46 @@
             </thead>
             <tbody>
               <tr v-for="item in todos" v-if="item.status=='4'">
-                <td>{{ item.name }}</td>
+                <td @click="openModalDetails(item)" >{{ item.name }}</td>
               </tr>
             </tbody>
           </table>
         </td>
       </tr>
     </table>
+  
     <!-- 新規登録フォーム -->
-
     <div id="overlay" v-show="showContent">
         <div id="content">
           <h2>ストーリーを追加</h2>
           <p>ストーリー名</p>
           <input type="text" v-model="addStoryName">
           <p>内容</p>
-          <textarea name="contents" rows="4" cols="40" placeholder="内容を入力してください。" onfocus="this.placeholder = ''"></textarea>
-          <p><button v-on:click="closeModal">キャンセル</button><button v-on:click="addItem">保存</button></p>
+          <textarea name="contents" v-model="addStoryContents" rows="4" cols="40" placeholder="内容を入力してください。" onfocus="this.placeholder = ''"></textarea>
+          <p><button v-on:click="closeModal">キャンセル</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button v-on:click="addItem">保存</button></p>
         </div>
     </div>  
+    <div id="overlay" v-show="showDetails">
+      <div id="content">
+        <h2>詳細</h2>
+        <p>ストーリー名</p>
+        <textarea name="name" v-model="storyName" rows="1" cols="20"></textarea>
+        <p>作業項目</p>
+        <select v-model="selected">
+          <option disabled value="">作業項目を選んでください</option>
+          <option v-for="option in options" v-bind:value="option.id">
+            {{ option.name }}
+          </option>
+        </select>
+        <p>内容</p>
+        <textarea name="contents" v-model="storyContents" rows="4" cols="40"></textarea>
+        <p><button v-on:click="closeModalDetails">キャンセル</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <button v-on:click="changeItem">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <button v-on:click="removeItem">削除</button>
+        </p>
+      </div>
+  </div>  
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="main.js"></script>
