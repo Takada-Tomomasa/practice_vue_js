@@ -1,3 +1,20 @@
+var STORAGE_KEY = 'todos-vuejs-demo'
+var todoStorage = {
+  fetch: function() {
+    var todos = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || '[]'
+    )
+    todos.forEach(function(todo, index) {
+      todo.id = index
+    })
+    todoStorage.uid = todos.length
+    return todos
+  },
+  save: function(todos) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+  }
+}
+
 var app = new Vue({
     el: '#app',
     data: {
@@ -25,12 +42,22 @@ var app = new Vue({
       { id: 6, name: "ストーリー6", contents: "内容6", status: 4},
       { id: 7, name: "ストーリー7", contents: "内容7", status: 4}]
     },
+    computed:{
+      doneLength:function(){
+        return this.todos.filter(function(val) {
+          return val.status == 4 ;
+        })
+      }
+    },
     methods:{
       openModal: function(){
         this.showContent = true
       },
       closeModal: function(){
         this.showContent = false
+      },
+      stopModal: function(){
+        event.stopPropagation()
       },
       openModalDetails: function(item){
         this.showDetails = true
@@ -68,6 +95,21 @@ var app = new Vue({
         index = this.todos.findIndex((todo) => todo.id === this.changeID)
         this.todos.splice(index,1)
         this.showDetails = false
+      },
+    },
+    watch: {
+      // オプションを使う場合はオブジェクト形式にする
+      todos: {
+        // 引数はウォッチしているプロパティの変更後の値
+        handler: function(todos) {
+          todoStorage.save(todos)
+        },
+        // deep オプションでネストしているデータも監視できる
+        deep: true
       }
-    }
+    },
+    created() {
+      // インスタンス作成時に自動的に fetch() する
+      this.todos = todoStorage.fetch()
+    },
   })

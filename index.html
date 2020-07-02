@@ -10,6 +10,8 @@
   <p>このボードは、テクコン部新人3名によるVue.jsの演習成果物である。</p>
 
   <div id="app">
+    <p class="rightLength">達成度 {{doneLength.length}}/{{todos.length}}</p>
+  
     <!-- 絞り込みラジオボタン -->
     <!-- ToDo テーブル -->
     <table class="kanban">
@@ -82,10 +84,11 @@
         </td>
       </tr>
     </table>
-  
+    
+
     <!-- 新規登録フォーム -->
-    <div id="overlay" v-show="showContent">
-        <div id="content">
+    <div id="overlay" v-show="showContent" @click = "closeModal">
+        <div id="content" @click = "stopModal">
           <h2>ストーリーを追加</h2>
           <p>ストーリー名</p>
           <input type="text" v-model="addStoryName">
@@ -95,8 +98,8 @@
             <button v-on:click="addItem">保存</button></p>
         </div>
     </div>  
-    <div id="overlay" v-show="showDetails">
-      <div id="content">
+    <div id="overlay" v-show="showDetails" @click = "closeModalDetails">
+      <div id="content" @click = "stopModal">
         <h2>詳細</h2>
         <p>ストーリー名</p>
         <textarea name="name" v-model="storyName" rows="1" cols="20"></textarea>
