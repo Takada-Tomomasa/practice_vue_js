@@ -9,7 +9,10 @@
   <h2>かんばんボード</h2>
   <p>このボードは、テクコン部新人3名によるVue.jsの演習成果物である。</p>
 
+
   <div id="app">
+
+    <input type="text" v-model="keyWord" placeholder="検索" onfocus="this.placeholder = ''">
     <p class="rightLength">達成度 {{doneLength.length}}/{{todos.length}}</p>
   
     <!-- 絞り込みラジオボタン -->
@@ -24,7 +27,7 @@
              </tr>
            </thead>
            <tbody>
-              <tr v-for="item in todos" v-if="item.status=='1'">
+              <tr v-for="item in searchTodos" v-if="item.status=='1'">
                 <td @click="openModalDetails(item)">{{ item.name }}</td>
              </tr>
            </tbody>
@@ -46,7 +49,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in todos" v-if="item.status=='2'">
+              <tr v-for="item in searchTodos" v-if="item.status=='2'">
                 <td @click="openModalDetails(item)">{{ item.name }}</td>
               </tr>
             </tbody>
@@ -61,7 +64,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in todos" v-if="item.status=='3'">
+              <tr v-for="item in searchTodos" v-if="item.status=='3'">
                 <td @click="openModalDetails(item)">{{ item.name }}</td>
               </tr>
             </tbody>
@@ -76,7 +79,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in todos" v-if="item.status=='4'">
+              <tr v-for="item in searchTodos" v-if="item.status=='4'">
                 <td @click="openModalDetails(item)" >{{ item.name }}</td>
               </tr>
             </tbody>

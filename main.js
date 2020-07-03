@@ -27,6 +27,7 @@ var app = new Vue({
       // selected: '',
       // changeID: '',
       storyCount: 100,
+      keyWord: '',
       options: [
         { id: 1, name: 'Todo' },
         { id: 2, name: 'Doing' },
@@ -35,18 +36,33 @@ var app = new Vue({
       ],
       todos:
       [{ id: 1, name: "画期的なデザインに変更", contents: "背景色を青に変える", status: 1},
-      { id: 2, name: "ストーリー2", contents: "内容2", status: 1},
-      { id: 3, name: "ストーリー3", contents: "内容3", status: 2},
-      { id: 4, name: "ストーリー4", contents: "内容4", status: 3},
-      { id: 5, name: "ストーリー5", contents: "内容5", status: 3},
-      { id: 6, name: "ストーリー6", contents: "内容6", status: 4},
-      { id: 7, name: "ストーリー7", contents: "内容7", status: 4}]
+      { id: 2, name: "Story2", contents: "contents2", status: 1},
+      { id: 3, name: "Story3", contents: "contents3", status: 3},
+      { id: 4, name: "Story4", contents: "contents4", status: 2},
+      { id: 5, name: "Story5", contents: "contents5", status: 3},
+      { id: 6, name: "Story6", contents: "contents6", status: 2},
+      { id: 7, name: "ストーリー2", contents: "内容2", status: 3},
+      { id: 8, name: "ストーリー3", contents: "内容3", status: 1},
+      { id: 9, name: "ストーリー4", contents: "内容4", status: 4},
+      { id: 10, name: "ストーリー5", contents: "内容5", status: 2},
+      { id: 11, name: "ストーリー6", contents: "内容6", status: 4},
+      { id: 12, name: "ストーリー7", contents: "内容7", status: 2}]
     },
     computed:{
       doneLength:function(){
         return this.todos.filter(function(val) {
           return val.status == 4 ;
         })
+      },
+      searchTodos: function(){
+        var itemList = [];
+        for(var item of this.todos) {
+          
+          if(item.name.indexOf(this.keyWord) !== -1) {
+            itemList.push(item);
+        }
+       }
+        return itemList;
       }
     },
     methods:{
