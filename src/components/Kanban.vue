@@ -1,46 +1,58 @@
 <template>
   <div>
-  <table class="kanban">
-    <tr>
-      <td v-for="status in statuses" v-bind:key="status.id">
-        <thead>
-          <tr>
-            <th>{{status.name}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <div v-for="todo in todos" v-bind:key="todo.id" class="story">
-            <tr v-if="todo.status==status.id">
-              <td>
-                <Story :todo="todo" />
-              </td>
+    <table class="kanban">
+      <tr>
+        <td v-for="status in statuses" v-bind:key="status.id">
+          <thead>
+            <tr>
+              <th>{{status.name}}</th>
             </tr>
-          </div>
-        </tbody>
-        <tfoot v-if="status.id==1">
-          <button v-on:click="openModal">＋</button>
-        </tfoot>
-      </td>
-    </tr>
-  </table>
-
-  <AddModal :showContent="showContent" />
+          </thead>
+          <tbody>
+            <div v-for="todo in todos" v-bind:key="todo.id" class="story">
+              <tr v-if="todo.status==status.id">
+                <td @click="openModalDetails(todo)">
+                  <Story :todo="todo" />
+                </td>
+              </tr>
+            </div>
+          </tbody>
+          <tfoot v-if="status.id==1">
+            <button v-on:click="openModal">＋</button>
+          </tfoot>
+        </td>
+      </tr>
+    </table>
+    <AddModal :showContent="showContent" :todos="todos" v-on:closeAddModal="closeModal" />
+    <DetailsModal
+      :showDetails="showDetails"
+      :todos="todos"
+      :statuses="statuses"
+      :storyName="storyName"
+      :storyContents="storyContents"
+      :changeID="changeID"
+      :selected="selected"
+      v-on:closeModalDetails="closeModalDetails"
+    ></DetailsModal>
   </div>
 </template>
 
 <script>
 import Story from "./Story";
 import AddModal from "./AddModal";
+import DetailsModal from "./DetailsModal";
 
 export default {
   name: "Kanban",
   components: {
     Story,
-    AddModal
+    AddModal,
+    DetailsModal
   },
   data() {
     return {
       showContent: false,
+      showDetails: false,
       statuses: [
         { id: 1, name: "Todo" },
         { id: 2, name: "Doing" },
@@ -77,6 +89,16 @@ export default {
     },
     stopModal: function() {
       event.stopPropagation();
+    },
+    openModalDetails: function(todo) {
+      this.storyName = todo.name;
+      this.storyContents = todo.contents;
+      this.changeID = todo.id;
+      this.selected = todo.status;
+      this.showDetails = true;
+    },
+    closeModalDetails: function() {
+      this.showDetails = false;
     }
   }
 };
@@ -105,5 +127,11 @@ export default {
 .story td {
   width: 200px;
   background-color: #ffffb2;
+}
+tfoot {
+  text-align: left;
+}
+th {
+  font-size: 120%;
 }
 </style>

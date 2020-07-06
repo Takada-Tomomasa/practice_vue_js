@@ -23,4 +23,7 @@ export default {
 html{
    background-color:#ffcc99;
 }
+p{
+  line-height:1px;
+}
 </style>

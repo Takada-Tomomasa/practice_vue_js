@@ -3,20 +3,16 @@
     <div id="content">
       <h2>ストーリーを追加</h2>
       <p>ストーリー名</p>
-      <!-- <input type="text" v-model="addStoryName" /> -->
+      <input type="text" v-model="addStoryName" />
       <p>内容</p>
-      <!-- <textarea
-        name="contents"
+      <textarea
         v-model="addStoryContents"
-        rows="4"
-        cols="40"
         placeholder="内容を入力してください。"
         onfocus="this.placeholder = ''"
-      ></textarea> -->
-      <!-- <p>
-        <button v-on:click="closeModal">キャンセル</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button v-on:click="addItem">保存</button>
-      </p> -->
+      ></textarea>
+      <button v-on:click="$emit('closeAddModal')">キャンセル</button>
+      <span style="margin-right: 1em;"></span>
+      <button v-on:click="addItem">保存</button>
     </div>
   </div>
 </template>
@@ -24,7 +20,27 @@
 <script>
 export default {
   props: {
-    showContent: Boolean
+    showContent: Boolean,
+    todos: Array
+  },
+  data() {
+    return {
+      storyCount: 100
+    };
+  },
+  methods: {
+    addItem: function() {
+      this.todos.push({
+        id: this.storyCount,
+        name: this.addStoryName,
+        contents: this.addStoryContents,
+        status: 1
+      });
+      this.$emit("closeAddModal");
+      this.addStoryName = "";
+      this.addStoryContents = "";
+      this.storyCount = this.storyCount + 1;
+    }
   }
 };
 </script>
@@ -51,7 +67,15 @@ export default {
   z-index: 2;
   width: 30%;
   padding: 1em;
-  padding-left: 6em;
+  padding-left: 10%;
   background-color: #ffffcc;
+}
+textarea {
+  resize: none;
+  width: 80%;
+  height: 4em;
+}
+input {
+  width: 60%;
 }
 </style>
