@@ -1,6 +1,6 @@
 <template>
-  <div id="overlay" v-show="showDetails">
-    <div id="content">
+  <div id="overlay" v-show="showDetails" v-on:click="$emit('closeModalDetails')">
+    <div id="content" @click="$emit('stopModal')">
       <h2>ストーリー詳細</h2>
       <p>ストーリー名</p>
       <input type="text" v-model="storyName" />
@@ -29,7 +29,6 @@
 export default {
   props: {
     showDetails: Boolean,
-    todos: Array,
     statuses: Array,
     storyName: String,
     storyContents: String,
@@ -43,18 +42,19 @@ export default {
   },
   methods: {
     changeItem: function() {
-      var index = this.todos.findIndex(todo => todo.id === this.changeID);
-      this.todos.splice(index, 1, {
+      var index = this.$store.getters.todos.findIndex(todo => todo.id === this.changeID);
+      var todo =  {
         id: this.changeID,
         name: this.storyName,
         contents: this.storyContents,
         status: this.selected
-      });
+      };
+      this.$store.commit("changeTodo", {todo:todo, index:index});
       this.$emit("closeModalDetails");
     },
     removeItem: function() {
-      var index = this.todos.findIndex(todo => todo.id === this.changeID);
-      this.todos.splice(index, 1);
+      var index = this.$store.getters.todos.findIndex(todo => todo.id === this.changeID);
+      this.$store.commit("removeTodo", index);
       this.$emit("closeModalDetails");
     }
   }

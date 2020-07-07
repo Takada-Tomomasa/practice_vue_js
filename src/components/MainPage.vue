@@ -2,6 +2,7 @@
   <div id="mainpage">
     <h2>かんばんボード</h2>
     <p>このボードは、テクコン部新人3名によるVue.jsの演習成果物である。</p>
+    <!-- <input type="text" v-model="keyWord" placeholder="検索" onfocus="this.placeholder = ''"> -->
     <Kanban />
   </div>
 </template>

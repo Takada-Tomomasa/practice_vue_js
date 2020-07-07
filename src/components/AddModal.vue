@@ -1,6 +1,6 @@
 <template>
-  <div id="overlay" v-show="showContent">
-    <div id="content">
+  <div id="overlay" v-show="showContent" v-on:click="$emit('closeAddModal')">
+    <div id="content"  @click="$emit('stopModal')">
       <h2>ストーリーを追加</h2>
       <p>ストーリー名</p>
       <input type="text" v-model="addStoryName" />
@@ -30,17 +30,25 @@ export default {
   },
   methods: {
     addItem: function() {
-      this.todos.push({
+      // this.todos.push({
+      //   id: this.storyCount,
+      //   name: this.addStoryName,
+      //   contents: this.addStoryContents,
+      //   status: 1
+      // });
+      var todo = {
         id: this.storyCount,
         name: this.addStoryName,
         contents: this.addStoryContents,
         status: 1
-      });
+      }
+      this.$store.commit("addTodo",todo);
       this.$emit("closeAddModal");
       this.addStoryName = "";
       this.addStoryContents = "";
       this.storyCount = this.storyCount + 1;
     }
+
   }
 };
 </script>
