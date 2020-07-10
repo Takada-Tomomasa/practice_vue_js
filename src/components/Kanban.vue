@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="rightLength">達成度 {{ doneLength }} /{{ $store.getters.todos.length }}</p>
+    <p class="storiesLength">達成度 {{ doneLength }} /{{ $store.getters.stories.length }}</p>
     <table class="kanban">
       <tr>
         <td v-for="status in statuses" v-bind:key="status.id">
@@ -10,52 +10,48 @@
             </tr>
           </thead>
           <tbody>
-            <div v-for="todo in $store.getters.todos" v-bind:key="todo.id" class="story">
-              <tr v-if="todo.status==status.id">
-                <td @click="openModalDetails(todo)">
-                  <Story :todo="todo" />
-                </td>
+            <div v-for="story in $store.getters.stories" v-bind:key="story.id" class="story">
+              <tr v-if="story.status==status.id">
+                <td @click="openDetailModal(story)">{{story.name}}</td>
               </tr>
             </div>
           </tbody>
           <tfoot v-if="status.id==1">
-            <button v-on:click="openModal">＋</button>
+            <button @click="openAddModal">＋</button>
           </tfoot>
         </td>
       </tr>
     </table>
     <AddModal
-      :showContent="showContent"
-      v-on:closeAddModal="closeModal"
-      v-on:stopModal="stopModal"
+      :addShowing="addShowing"
+      v-on:closeAddModal="closeAddModal"
+      v-on:preventCloseModal="preventCloseModal"
     />
-    <DetailsModal
-      :showDetails="showDetails"
+    <DetailModal
+      :detailShowing="detailShowing"
       :statuses="statuses"
       :storyName="storyName"
       :storyContents="storyContents"
       :changeID="changeID"
       :selected="selected"
-      v-on:closeModalDetails="closeModalDetails"
-      v-on:stopModal="stopModal"
-    ></DetailsModal>
+      v-on:closeDetailModal="closeDetailModal"
+      v-on:preventCloseModal="preventCloseModal"
+    ></DetailModal>
   </div>
 </template>
 
 <script>
-import Story from "./Story";
 import AddModal from "./AddModal";
-import DetailsModal from "./DetailsModal";
+import DetailModal from "./DetailModal";
 
 export default {
   name: "Kanban",
   components: {
-    Story,
     AddModal,
-    DetailsModal
+    DetailModal
   },
   created() {
-    const todos = [
+    const stories = [
       {
         id: 1,
         name: "画期的なデザインに変更",
@@ -74,12 +70,12 @@ export default {
       { id: 11, name: "ストーリー6", contents: "内容6", status: 4 },
       { id: 12, name: "ストーリー7", contents: "内容7", status: 2 }
     ];
-    this.$store.commit("setTodos", todos);
+    this.$store.commit("setStories", stories);
   },
   data() {
     return {
-      showContent: false,
-      showDetails: false,
+      addShowing: false,
+      detailShowing: false,
       statuses: [
         { id: 1, name: "Todo" },
         { id: 2, name: "Doing" },
@@ -90,37 +86,37 @@ export default {
   },
   computed: {
     doneLength: function() {
-      return this.$store.getters.todos.filter(function(val) {
+      return this.$store.getters.stories.filter(function(val) {
         return val.status == 4;
       }).length;
     }
   },
   methods: {
-    openModal: function() {
-      this.showContent = true;
+    openAddModal: function() {
+      this.addShowing = true;
     },
-    closeModal: function() {
-      this.showContent = false;
+    closeAddModal: function() {
+      this.addShowing = false;
     },
-    stopModal: function() {
+    preventCloseModal: function() {
       event.stopPropagation();
     },
-    openModalDetails: function(todo) {
-      this.storyName = todo.name;
-      this.storyContents = todo.contents;
-      this.changeID = todo.id;
-      this.selected = todo.status;
-      this.showDetails = true;
+    openDetailModal: function(story) {
+      this.storyName = story.name;
+      this.storyContents = story.contents;
+      this.changeID = story.id;
+      this.selected = story.status;
+      this.detailShowing = true;
     },
-    closeModalDetails: function() {
-      this.showDetails = false;
+    closeDetailModal: function() {
+      this.detailShowing = false;
     }
   }
 };
 </script>
 
 <style scoped>
-.rightLength {
+.storiesLength {
   padding-right: 20%;
   text-align: right;
 }
@@ -139,13 +135,15 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-.todo tfoot td {
+.story tfoot td {
   text-align: left;
   border: none;
 }
 .story td {
   width: 200px;
+  height: 30px;
   background-color: #ffffb2;
+  vertical-align: middle;
 }
 tfoot {
   text-align: left;

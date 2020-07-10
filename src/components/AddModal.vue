@@ -1,6 +1,6 @@
 <template>
-  <div id="overlay" v-show="showContent" v-on:click="$emit('closeAddModal')">
-    <div id="content"  @click="$emit('stopModal')">
+  <div id="overlay" v-show="addShowing" @click="$emit('closeAddModal')">
+    <div id="content" @click="$emit('preventCloseModal')">
       <h2>ストーリーを追加</h2>
       <p>ストーリー名</p>
       <input type="text" v-model="addStoryName" />
@@ -10,9 +10,9 @@
         placeholder="内容を入力してください。"
         onfocus="this.placeholder = ''"
       ></textarea>
-      <button v-on:click="$emit('closeAddModal')">キャンセル</button>
+      <button @click="$emit('closeAddModal')">キャンセル</button>
       <span style="margin-right: 1em;"></span>
-      <button v-on:click="addItem">保存</button>
+      <button @click="addItem">保存</button>
     </div>
   </div>
 </template>
@@ -20,8 +20,8 @@
 <script>
 export default {
   props: {
-    showContent: Boolean,
-    todos: Array
+    addShowing: Boolean,
+    stories: Array
   },
   data() {
     return {
@@ -30,25 +30,18 @@ export default {
   },
   methods: {
     addItem: function() {
-      // this.todos.push({
-      //   id: this.storyCount,
-      //   name: this.addStoryName,
-      //   contents: this.addStoryContents,
-      //   status: 1
-      // });
-      var todo = {
+      var story = {
         id: this.storyCount,
         name: this.addStoryName,
         contents: this.addStoryContents,
         status: 1
-      }
-      this.$store.commit("addTodo",todo);
+      };
+      this.$store.commit("addStory", story);
       this.$emit("closeAddModal");
       this.addStoryName = "";
       this.addStoryContents = "";
       this.storyCount = this.storyCount + 1;
     }
-
   }
 };
 </script>

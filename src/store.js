@@ -1,31 +1,30 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-Vue.use(Vuex)
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
 
 // ストアを作成
 const store = new Vuex.Store({
   state: {
-    todos:{}
+    stories: {},
   },
-  getters:{
-      todos(state){
-          return state.todos
-      }
+  getters: {
+    stories(state) {
+      return state.stories;
+    },
   },
   mutations: {
-    // カウントアップするミューテーションを登録
-    setTodos(state,newTodos){
-      state.todos = newTodos;
+    setStories(state, newStories) {
+      state.stories = newStories;
     },
-    addTodo(state,newTodo){
-      state.todos.push(newTodo);
+    addStory(state, newStory) {
+      state.stories.push(newStory);
     },
-    changeTodo(state, {todo, index}){
-      state.todos.splice(index, 1, todo);
+    changeStory(state, { changedStory, index }) {
+      state.stories.splice(index, 1, changedStory);
     },
-    removeTodo(state, index){
-      state.todos.splice(index, 1);
+    removeStory(state, index) {
+      state.stories.splice(index, 1);
     },
-  }
-})
-export default store
+  },
+});
+export default store;
