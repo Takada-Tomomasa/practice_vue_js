@@ -51,22 +51,20 @@ describe("Kanban.vue", () => {
     statuses.forEach((status,index) => {
       expect(wrapper.findAll("th").at(index).text()).toEqual(status);
     });
+  })
+
+  it("test Kanban button", () => {
+    wrapper.find('button').trigger('click')
+    expect(wrapper.vm.$data.addShowing).toBeTruthy();  
+  }),
+  
+  it("test Kanban AddModal", () => {
+    const AddModal = wrapper.find("AddModal-stub");
+    expect(AddModal.exists()).toBeTruthy();
   }),
 
-    it("test Kanban button", () => {
-      wrapper.find('button').trigger('click')
-      expect(wrapper.vm.$data.addShowing).toBeTruthy();  
-    }),
-    
-    it("test Kanban AddModal", () => {
-      const AddModal = wrapper.find("AddModal-stub");
-      expect(AddModal.exists()).toBeTruthy();
-    }),
-
-    it("test Kanban DetailModal", () => {
-      const DetailModal = wrapper.find("DetailModal-stub");
-      expect(DetailModal.exists()).toBeTruthy();
-    })
-  
-
+  it("test Kanban DetailModal", () => {
+    const DetailModal = wrapper.find("DetailModal-stub");
+    expect(DetailModal.exists()).toBeTruthy();
+  })
 });
