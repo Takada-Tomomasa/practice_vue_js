@@ -32,8 +32,8 @@
       :statuses="statuses"
       :storyName="storyName"
       :storyContents="storyContents"
-      :changeID="changeID"
-      :selected="selected"
+      :storyID="storyID"
+      :storyStatus="storyStatus"
       v-on:closeDetailModal="closeDetailModal"
       v-on:preventCloseModal="preventCloseModal"
     ></DetailModal>
@@ -61,12 +61,12 @@ export default {
       { id: 2, name: "Story2", contents: "contents2", status: 1 },
       { id: 3, name: "Story3", contents: "contents3", status: 3 },
       { id: 4, name: "Story4", contents: "contents4", status: 2 },
-      { id: 5, name: "Story5", contents: "contents5", status: 3 },
-      { id: 6, name: "Story6", contents: "contents6", status: 2 },
+      { id: 5, name: "Story5", contents: "contents5", status: 4 },
+      { id: 6, name: "Story6", contents: "contents6", status: 4 },
       { id: 7, name: "ストーリー2", contents: "内容2", status: 3 },
       { id: 8, name: "ストーリー3", contents: "内容3", status: 1 },
       { id: 9, name: "ストーリー4", contents: "内容4", status: 4 },
-      { id: 10, name: "ストーリー5", contents: "内容5", status: 2 },
+      { id: 10, name: "ストーリー5", contents: "内容5", status: 4 },
       { id: 11, name: "ストーリー6", contents: "内容6", status: 4 },
       { id: 12, name: "ストーリー7", contents: "内容7", status: 2 }
     ];
@@ -104,8 +104,8 @@ export default {
     openDetailModal: function(story) {
       this.storyName = story.name;
       this.storyContents = story.contents;
-      this.changeID = story.id;
-      this.selected = story.status;
+      this.storyID = story.id;
+      this.storyStatus = story.status;
       this.detailShowing = true;
     },
     closeDetailModal: function() {

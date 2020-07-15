@@ -5,7 +5,7 @@
       <p>ストーリー名</p>
       <input type="text" v-model="storyName" />
       <p>作業項目</p>
-      <select v-model="selected">
+      <select v-model="storyStatus">
         <option disabled value>作業項目を選んでください</option>
         <option
           v-for="status in statuses"
@@ -32,31 +32,26 @@ export default {
     statuses: Array,
     storyName: String,
     storyContents: String,
-    changeID: Number,
-    selected: Number
-  },
-  data() {
-    return {
-      storyCount: 100
-    };
+    storyID: Number,
+    storyStatus: Number
   },
   methods: {
     changeItem: function() {
       var index = this.$store.getters.stories.findIndex(
-        story => story.id === this.changeID
+        story => story.id === this.storyID
       );
       var story = {
-        id: this.changeID,
+        id: this.storyID,
         name: this.storyName,
         contents: this.storyContents,
-        status: this.selected
+        status: this.storyStatus
       };
       this.$store.commit("changeStory", { changedStory: story, index: index });
       this.$emit("closeDetailModal");
     },
     removeItem: function() {
       var index = this.$store.getters.stories.findIndex(
-        story => story.id === this.changeID
+        story => story.id === this.storyID
       );
       this.$store.commit("removeStory", index);
       this.$emit("closeDetailModal");
@@ -66,36 +61,5 @@ export default {
 </script>
 
 <style>
-#overlay {
-  /* 要素を重ねた時の順番 */
-  z-index: 1;
-
-  /* 画面全体を覆う設定 */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-
-  /* 画面の中央に要素を表示させる設定 */
-  display: flex;
-  align-items: center; /*縦中央*/
-  justify-content: center; /*横中央*/
-}
-#content {
-  z-index: 2;
-  width: 30%;
-  padding: 1em;
-  padding-left: 10%;
-  background-color: #ffffcc;
-}
-textarea {
-  resize: none;
-  width: 80%;
-  height: 4em;
-}
-input {
-  width: 60%;
-}
+@import '../style/Modal.css';
 </style>

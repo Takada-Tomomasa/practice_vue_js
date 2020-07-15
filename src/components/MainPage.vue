@@ -1,7 +1,8 @@
 <template>
   <div id="mainpage">
     <h2>かんばんボード</h2>
-    <p>このボードは、テクコン部新人3名によるVue.jsの演習成果物である。</p>
+    <p>とれぷろ！ 作</p>
+
     <!-- <input type="text" v-model="keyWord" placeholder="検索" onfocus="this.placeholder = ''"> -->
     <Kanban />
   </div>
@@ -17,6 +18,6 @@ export default {
 </script>
 <style scoped>
 #mainpage {
-  text-align: left;
+  text-align: center;
 }
 </style>
