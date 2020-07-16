@@ -105,11 +105,12 @@ describe("Kanban.vue", () => {
     }),
     it("test Kanban-25 AddModal send", () => {
       expect(wrapper.findComponent(AddModal).props().addShowing).toBeFalsy();
+      wrapper.setData({ addShowing: true });
       wrapper.findComponent(AddModal).vm.$emit("closeAddModal");
-      expect(wrapper.emitted("closeAddModal")).toBeTruthy();
-    });
+      expect(wrapper.vm.$data.addShowing).toBeFalsy();
+    }),
   it("test Kanban-30 DetailModal exist", () => {
     const DetailModal = wrapper.find("DetailModal-stub");
     expect(DetailModal.exists()).toBeTruthy();
-  });
+  })
 });
