@@ -1,13 +1,9 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Kanban from "@/components/Kanban.vue";
-import AddModal from "@/components/AddModal.vue";
 import Vuex from "vuex";
 
 let wrapper;
 
-// afterEach(() => {
-//   wrapper.destroy();
-// });
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
@@ -49,12 +45,7 @@ describe("Kanban.vue", () => {
     it("test Kanban-9 thead status.name", () => {
       const statuses = ["Todo", "Doing", "Review", "Done"];
       statuses.forEach((status, index) => {
-        expect(
-          wrapper
-            .findAll("th")
-            .at(index)
-            .text()
-        ).toEqual(status);
+        expect(wrapper.findAll("th").at(index).text()).toEqual(status);
       });
     }),
     it("test Kanban-14 story", async () => {
@@ -66,30 +57,12 @@ describe("Kanban.vue", () => {
       ];
       store.commit("setStories", stories);
       await wrapper.vm.$nextTick();
-      expect(
-        wrapper
-          .findAll("tbody")
-          .at(0)
-          .text()
-      ).toEqual("Story2");
-      expect(
-        wrapper
-          .findAll("tbody")
-          .at(1)
-          .text()
-      ).toEqual("Story4" + "Story5");
-      expect(
-        wrapper
-          .findAll("tbody")
-          .at(2)
-          .text()
-      ).toEqual("");
-      expect(
-        wrapper
-          .findAll("tbody")
-          .at(3)
-          .text()
-      ).toEqual("Story3");
+      expect(wrapper.findAll("tbody").at(0).text()).toEqual("Story2");
+      expect(wrapper.findAll("tbody").at(1).text()).toEqual(
+        "Story4" + "Story5"
+      );
+      expect(wrapper.findAll("tbody").at(2).text()).toEqual("");
+      expect(wrapper.findAll("tbody").at(3).text()).toEqual("Story3");
     }),
     it("test Kanban-15 storyclick", () => {
       wrapper.find(".story tr td").trigger("click");
@@ -104,13 +77,36 @@ describe("Kanban.vue", () => {
       expect(AddModal.exists()).toBeTruthy();
     }),
     it("test Kanban-25 AddModal send", () => {
-      expect(wrapper.findComponent(AddModal).props().addShowing).toBeFalsy();
+      expect(wrapper.find("AddModal-stub").props().addShowing).toBeFalsy();
       wrapper.setData({ addShowing: true });
-      wrapper.findComponent(AddModal).vm.$emit("closeAddModal");
+      wrapper.find("AddModal-stub").vm.$emit("closeAddModal");
       expect(wrapper.vm.$data.addShowing).toBeFalsy();
     }),
-  it("test Kanban-30 DetailModal exist", () => {
-    const DetailModal = wrapper.find("DetailModal-stub");
-    expect(DetailModal.exists()).toBeTruthy();
-  })
+    it("test Kanban-30 DetailModal exist", () => {
+      const DetailModal = wrapper.find("DetailModal-stub");
+      expect(DetailModal.exists()).toBeTruthy();
+    });
+  it("test Kanban-30 DetailModal send", async () => {
+    expect(wrapper.find("DetailModal-stub").props().detailShowing).toBeFalsy();
+    wrapper.setData({ detailShowing: true });
+    wrapper.find("DetailModal-stub").vm.$emit("closeDetailModal");
+    expect(wrapper.vm.$data.detailShowing).toBeFalsy();
+    expect(wrapper.find("DetailModal-stub").props().statuses).toStrictEqual([
+      { id: 1, name: "Todo" },
+      { id: 2, name: "Doing" },
+      { id: 3, name: "Review" },
+      { id: 4, name: "Done" },
+    ]);
+    const story = { id: 2, name: "Story2", contents: "contents2", status: 1 };
+    wrapper.vm.openDetailModal(story);
+    await wrapper.vm.$nextTick;
+    expect(wrapper.find("DetailModal-stub").props().storyID).toEqual(2);
+    expect(wrapper.find("DetailModal-stub").props().storyStatus).toEqual(1);
+    expect(wrapper.find("DetailModal-stub").props().storyName).toEqual(
+      "Story2"
+    );
+    expect(wrapper.find("DetailModal-stub").props().storyContents).toEqual(
+      "contents2"
+    );
+  });
 });

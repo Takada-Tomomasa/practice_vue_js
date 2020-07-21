@@ -25,7 +25,9 @@ export default {
   },
   data() {
     return {
-      storyCount: 100
+      storyCount: 100,
+      addStoryName: "",
+      addStoryContents: ""
     };
   },
   methods: {

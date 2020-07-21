@@ -81,7 +81,11 @@ export default {
         { id: 2, name: "Doing" },
         { id: 3, name: "Review" },
         { id: 4, name: "Done" }
-      ]
+      ],
+      storyID: null,
+      storyName: "",
+      storyContents: "",
+      storyStatus: null
     };
   },
   computed: {
