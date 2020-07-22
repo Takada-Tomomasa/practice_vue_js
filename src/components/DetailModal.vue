@@ -6,7 +6,6 @@
       <input type="text" v-model="storyName" />
       <p>作業項目</p>
       <select v-model="storyStatus">
-        <option disabled value>作業項目を選んでください</option>
         <option
           v-for="status in statuses"
           v-bind:key="status.id"
@@ -30,10 +29,44 @@ export default {
   props: {
     detailShowing: Boolean,
     statuses: Array,
-    storyName: String,
-    storyContents: String,
-    storyID: Number,
-    storyStatus: Number
+    passStoryName: String,
+    passStoryContents: String,
+    passStoryID: Number,
+    passStoryStatus: Number
+  },
+  computed: {
+    storyName: {
+      get() {
+        return this.passStoryName;
+      },
+      set(value) {
+        this.$emit("update:passStoryName", value);
+      }
+    },
+    storyContents: {
+      get() {
+        return this.passStoryContents;
+      },
+      set(value) {
+        this.$emit("update:passStoryContents", value);
+      }
+    },
+    storyID: {
+      get() {
+        return this.passStoryID;
+      },
+      set(value) {
+        this.$emit("update:passStoryID", value);
+      }
+    },
+    storyStatus: {
+      get() {
+        return this.passStoryStatus;
+      },
+      set(value) {
+        this.$emit("update:passStoryStatus", value);
+      }
+    }
   },
   methods: {
     changeItem: function() {
@@ -61,5 +94,5 @@ export default {
 </script>
 
 <style>
-@import '../style/Modal.css';
+@import "../style/Modal.css";
 </style>

@@ -100,12 +100,12 @@ describe("Kanban.vue", () => {
     const story = { id: 2, name: "Story2", contents: "contents2", status: 1 };
     wrapper.vm.openDetailModal(story);
     await wrapper.vm.$nextTick;
-    expect(wrapper.find("DetailModal-stub").props().storyID).toEqual(2);
-    expect(wrapper.find("DetailModal-stub").props().storyStatus).toEqual(1);
-    expect(wrapper.find("DetailModal-stub").props().storyName).toEqual(
+    expect(wrapper.find("DetailModal-stub").props().passStoryID).toEqual(2);
+    expect(wrapper.find("DetailModal-stub").props().passStoryStatus).toEqual(1);
+    expect(wrapper.find("DetailModal-stub").props().passStoryName).toEqual(
       "Story2"
     );
-    expect(wrapper.find("DetailModal-stub").props().storyContents).toEqual(
+    expect(wrapper.find("DetailModal-stub").props().passStoryContents).toEqual(
       "contents2"
     );
   });

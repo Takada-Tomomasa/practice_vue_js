@@ -28,12 +28,12 @@
       v-on:preventCloseModal="preventCloseModal"
     />
     <DetailModal
-      :detailShowing="detailShowing"
-      :statuses="statuses"
-      :storyName="storyName"
-      :storyContents="storyContents"
-      :storyID="storyID"
-      :storyStatus="storyStatus"
+      :detailShowing.sync="detailShowing"
+      :statuses.sync="statuses"
+      :passStoryName.sync="storyName"
+      :passStoryContents.sync="storyContents"
+      :passStoryID.sync="storyID"
+      :passStoryStatus.sync="storyStatus"
       v-on:closeDetailModal="closeDetailModal"
       v-on:preventCloseModal="preventCloseModal"
     ></DetailModal>
@@ -148,6 +148,7 @@ export default {
   height: 30px;
   background-color: #ffffb2;
   vertical-align: middle;
+  word-break: break-all;
 }
 tfoot {
   text-align: left;
