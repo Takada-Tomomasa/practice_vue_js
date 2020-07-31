@@ -77,7 +77,6 @@ describe("Kanban.vue", () => {
       expect(AddModal.exists()).toBeTruthy();
     }),
     it("test Kanban-25 AddModal send", () => {
-      expect(wrapper.find("AddModal-stub").props().addShowing).toBeFalsy();
       wrapper.setData({ addShowing: true });
       wrapper.find("AddModal-stub").vm.$emit("closeAddModal");
       expect(wrapper.vm.$data.addShowing).toBeFalsy();
@@ -87,7 +86,6 @@ describe("Kanban.vue", () => {
       expect(DetailModal.exists()).toBeTruthy();
     });
   it("test Kanban-30 DetailModal send", async () => {
-    expect(wrapper.find("DetailModal-stub").props().detailShowing).toBeFalsy();
     wrapper.setData({ detailShowing: true });
     wrapper.find("DetailModal-stub").vm.$emit("closeDetailModal");
     expect(wrapper.vm.$data.detailShowing).toBeFalsy();

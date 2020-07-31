@@ -1,5 +1,5 @@
 <template>
-  <div id="overlay" v-show="addShowing" @click="$emit('closeAddModal')">
+  <div id="overlay" @click="$emit('closeAddModal')">
     <div id="content" @click="$emit('preventCloseModal')">
       <h2>ストーリーを追加</h2>
       <p>ストーリー名</p>
@@ -20,34 +20,37 @@
 <script>
 export default {
   props: {
-    addShowing: Boolean,
-    stories: Array
+    stories: Array,
   },
   data() {
     return {
       storyCount: 100,
       addStoryName: "",
-      addStoryContents: ""
+      addStoryContents: "",
     };
   },
   methods: {
-    addItem: function() {
+    addItem: function () {
       var story = {
         id: this.storyCount,
         name: this.addStoryName,
         contents: this.addStoryContents,
-        status: 1
+        status: 1,
       };
-      this.$store.commit("addStory", story);
-      this.$emit("closeAddModal");
+      if (!story.name.match(/\S/g)) {
+        alert("名前を入力してください！");
+      } else {
+        this.$store.commit("addStory", story);
+        this.$emit("closeAddModal");
+        this.storyCount = this.storyCount + 1;
+      }
       this.addStoryName = "";
       this.addStoryContents = "";
-      this.storyCount = this.storyCount + 1;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
-@import '../style/Modal.css';
+@import "../style/Modal.css";
 </style>

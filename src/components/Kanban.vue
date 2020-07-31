@@ -22,13 +22,16 @@
         </td>
       </tr>
     </table>
+     <transition name="fade">
     <AddModal
-      :addShowing="addShowing"
+      v-show="addShowing"
       v-on:closeAddModal="closeAddModal"
       v-on:preventCloseModal="preventCloseModal"
     />
+     </transition>
+    <transition name="fade">
     <DetailModal
-      :detailShowing.sync="detailShowing"
+      v-show="detailShowing"
       :statuses.sync="statuses"
       :passStoryName.sync="storyName"
       :passStoryContents.sync="storyContents"
@@ -37,6 +40,7 @@
       v-on:closeDetailModal="closeDetailModal"
       v-on:preventCloseModal="preventCloseModal"
     ></DetailModal>
+    </transition>
   </div>
 </template>
 
@@ -155,5 +159,12 @@ tfoot {
 }
 th {
   font-size: 120%;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
 }
 </style>

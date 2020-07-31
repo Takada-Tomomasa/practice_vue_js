@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <MainPage />
+    <!-- <router-link to="/">ログイン</router-link>|
+    <router-link to="/register">登録</router-link> -->
+    <router-view />
   </div>
 </template>
 <script>
-import MainPage from "./components/MainPage";
-export default {
-  name: "App",
-  components: {
-    MainPage
-  }
-};
+export default {};
 </script>
 <style lang="scss">
 #app {
@@ -20,10 +16,10 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-html{
-   background-color:#ffcc99;
+html {
+  background-color: #ffcc99;
 }
-p{
-  line-height:1px;
+p {
+  line-height: 1px;
 }
 </style>

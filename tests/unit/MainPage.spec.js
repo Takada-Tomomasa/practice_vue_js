@@ -21,4 +21,7 @@ describe("MainPage.vue", () => {
       const Kanban = wrapper.find("Kanban-stub");
       expect(Kanban.exists()).toBeTruthy();
     });
+    it("test Mainpage img", () => {
+      expect(wrapper.findAll("img").at(3).exists()).toBeTruthy();
+    });
 });
