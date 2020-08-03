@@ -6,11 +6,11 @@
       <a class="here">登録</a>
 
       <p>ID:</p>
-      <input type="text" v-model="id" />
+      <input type="text" v-model="addUserId" />
       <p>Password:</p>
-      <input type="text" v-model="Password" />
+      <input type="text" v-model="addPassword" />
       <p>
-      <button @click="toKanban">登録</button>
+        <button @click="addUser">登録</button>
       </p>
     </div>
   </div>
@@ -18,12 +18,37 @@
 
 <script>
 export default {
+  data() {
+    return {
+      addUserId: "",
+      addPassword: "",
+    };
+  },
   methods: {
-    toKanban: function () {
-      this.$router.push({ path: "/mainpage" });
-    },
-    toLogin: function() {
+    toLogin: function () {
       this.$router.push({ path: "/" });
+    },
+    addUser: function () {
+      var user = {
+        userId: this.addUserId,
+        password: this.addPassword,
+      };
+      if (!user.userId.match(/\S/g) || !user.password.match(/\S/g)) {
+        alert("未入力項目があります！");
+        return;
+      }
+      for (var registeredUser of this.$store.getters.users) {
+        if (user.userId == registeredUser.userId) {
+          alert("このIdは登録されています！");
+          return;
+        }
+      }
+      console.log(user);
+      this.$store.commit("addUser", user);
+      this.$router.push({ path: "/mainpage" });
+      console.log(this.$store.getters.users);
+      this.addUserId = "";
+      this.addPassword = "";
     },
   },
 };
@@ -43,5 +68,4 @@ export default {
 .here {
   text-decoration: underline;
 }
-
 </style>
