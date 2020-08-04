@@ -12,25 +12,27 @@
       <p>
       <button @click="checkUser">ログイン</button>
       </p>
+      {{$store.getters.users}}
     </div>
   </div>
 </template>
 <script>
+
+import axios from 'axios';
 export default {
-    created() {
-    const users = [
-      {userId: "yajima", password: "aaa"},
-      { userId: "kato", password: "bbb" },
-      { userId: "takada", password: "ccc" },
-      { userId: "wang", password: "ddd" },
-    ];
-    this.$store.commit("setUsers", users);
-  },
   data() {
     return {
       checkUserId: "",
       checkPassword: "",
+      setUsers:[],
     };
+  },
+  mounted () {
+    axios
+      .get("https://bbc3wqb8k1.execute-api.us-east-2.amazonaws.com/get-all-users")
+      .then(response => (this.setUsers = JSON.parse(response.data.body)["Items"]))
+      .catch(error=>console.log(error))
+      .finally(() => this.$store.commit("setUsers", this.setUsers))  
   },
   methods: {
     toKanban: function () {
